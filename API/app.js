@@ -81,6 +81,31 @@ app.post('/albums', function(req, res, next) {
   })
 })
 
+app.put('/albums/:id', function(req, res, next) {
+    console.log(req.body)
+    dal.updateAlbum(req.body, function(err, data) {
+        if (err) {
+            var responseError = BuildResponseError(err)
+            return next(new HTTPError(responseError.status, responseError.message, responseError));
+        }
+        console.log('Call successful.  Album updated', data)
+        res.append('Content-type', 'application/json')
+        res.status(201).send(JSON.stringify(data, null, 2))
+    })
+})
+
+app.delete('/albums/:id', function(req, res, next) {
+    console.log(req.body)
+    dal.deleteAlbum(req.body, function(err, data) {
+        if (err) {
+            var responseError = BuildResponseError(err)
+            return next(new HTTPError(responseError.status, responseError.message, responseError));
+        }
+        console.log('Call successful.  Album deleted', data)
+        res.append('Content-type', 'application/json')
+        res.status(201).send(JSON.stringify(data, null, 2))
+    })
+})
 
 var server = http.createServer(app)
 server.listen(port, () => console.log('opened server on port', server.address()))

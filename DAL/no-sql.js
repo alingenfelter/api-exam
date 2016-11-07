@@ -14,7 +14,9 @@ var dal = {
   createView: createView,
   getAlbumByID: getAlbumByID,
   listAlbums: listAlbums,
-  createAlbum: createAlbum
+  createAlbum: createAlbum,
+  updateAlbum: updateAlbum,
+  deleteAlbum: deleteAlbum
 }
 
 function createView(designDoc, callback) {
@@ -46,12 +48,19 @@ function listAlbums(sortBy, startKey, limit, callback) {
   if (typeof sortBy == 'undefined' || sortBy === null) {
     return callback(new Error('Missing sort by parameter'))
   }
+  if (startKey !== '') {
+    limit = limit + 1
+  }
   db.query(sortBy, {
+    startkey: startKey,
     limit: limit,
     include_docs: true
   }, function (err, data) {
     if (err) return callback(err)
-    if (data) return callback(null, data.rows)
+    if (startKey !== '') {
+      data.rows.shift()
+    }
+    callback(null, data.rows)
   })
 }
 
@@ -82,6 +91,37 @@ function createAlbum(data, callback) {
       if (err) return callback(err)
       if (response) return callback(null, response)
     })
+  }
+}
+
+function updateAlbum(data, callback) {
+    // Call to couch retrieving a document with the given _id value.
+    if (typeof data == "undefined" || data === null) {
+        return callback(new Error('400Missing data for update'));
+    } else if (data.hasOwnProperty('_id') !== true) {
+        return callback(new Error('400. Missing id property from data'));
+    } else if (data.hasOwnProperty('_rev') !== true) {
+        return callback(new Error('400. Missing rev property from data'));
+    } else {
+        db.put(data, function(err, response) {
+            if (err) return callback(err);
+            if (response) return callback(null, response);
+        });
+    }
+}
+
+function deleteAlbum(data, callback) {
+    if (typeof data == "undefined" || data === null) {
+        return callback(new Error('400Missing data for delete'));
+    } else if (data.hasOwnProperty('_id') !== true) {
+        return callback(new Error('400Missing _id property from data'));
+    } else if (data.hasOwnProperty('_rev') !== true) {
+        return callback(new Error('400Missing _rev property from data'));
+    } else {
+      db.remove(data, function(err, response) {
+          if (err) return callback(err);
+          if (response) return callback(null, response);
+      });
   }
 }
 
