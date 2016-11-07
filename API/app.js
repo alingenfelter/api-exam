@@ -63,7 +63,7 @@ app.get('/albums', function (req, res, next) {
     if (data) {
       console.log('Call successful.  Albums listed', data)
       res.append('Content-type', 'application/json')
-      res.status(201).send(JSON.stringify(data, null, 2))
+      res.status(200).send(JSON.stringify(data, null, 2))
     }
   })
 })
@@ -103,7 +103,7 @@ app.delete('/albums/:id', function(req, res, next) {
         }
         console.log('Call successful.  Album deleted', data)
         res.append('Content-type', 'application/json')
-        res.status(201).send(JSON.stringify(data, null, 2))
+        res.status(200).send(JSON.stringify(data, null, 2))
     })
 })
 
