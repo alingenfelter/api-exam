@@ -1,0 +1,34 @@
+{
+  "name": "api-exam",
+  "version": "1.0.0",
+  "description": "API, DAL connecting to CouchDB",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "node-http-error": "^1.0.0",
+    "node-uuid": "^1.4.7",
+    "pouchdb": "^6.0.7",
+    "pouchdb-http": "^6.0.2",
+    "pouchdb-mapreduce": "^6.0.7",
+    "ramda": "^0.22.1",
+    "url": "^0.11.0",
+    "zero-config": "^7.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node API/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alingenfelter/api-exam.git"
+  },
+  "author": "Andrea Lingenfelter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alingenfelter/api-exam/issues"
+  },
+  "homepage": "https://github.com/alingenfelter/api-exam#readme"
+}
