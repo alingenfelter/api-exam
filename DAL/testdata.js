@@ -6,11 +6,11 @@ const {
 } = require('ramda')
 
 var views = [{
-    _id: "_design/venues",
+    _id: "_design/albums",
     views: {
-        "venues": {
+        "albums": {
             map: function(doc) {
-                if (doc.type === "venue") {
+                if (doc.type === "album") {
                     emit(doc._id)
                 }
             }.toString()
